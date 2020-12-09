@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_restful import Api 
 from flask_jwt import JWT
@@ -10,7 +12,7 @@ from resources.store import store, storeList
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']  = 'sqlite:///data.db' #Connecting to database 
+app.config['SQLALCHEMY_DATABASE_URI']  = os.environ.get('DATABASE_URL','sqlite///data.db') #Connecting to database, in this case posgress
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #We want sql alchemy to do the tracking of modification not flask
 
