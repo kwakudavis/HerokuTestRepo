@@ -9,7 +9,6 @@ from resources.store import store, storeList
 
 
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']  = 'sqlite:///data.db' #Connecting to database 
 
@@ -18,10 +17,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #We want sql alchemy to do 
 app.secret_key = 'jose'
 
 api = Api(app)
-
-@app.before_first_request
-def create_table():
-    db.create_all()
 
 jwt = JWT(app, authenticate, identity)#autentication
 
@@ -36,8 +31,12 @@ api.add_resource(store, '/store/<string:name>')
 
 
 
+
+
+
 if __name__ == '__main__': #This creates the condition that the code should only run app.py when name is main, name is main only when we run python app.py, in that case we can sometimes import app.py and use it as is without having to run it
     from db import db
+   
     db.init_app(app)
     app.run(port=5000, debug = True)#runs application on a particular port
 
